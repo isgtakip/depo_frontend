@@ -6,7 +6,7 @@
     @clicked-save="clickedSave"
     @clicked-new="clickedNew"
     >
-         <v-form v-model="valid">
+         <v-form v-model="valid" ref="form">
     <v-container fluid>
       <v-row>
         <v-col
@@ -27,9 +27,11 @@
         >
        <v-autocomplete
        v-model="value"
-       auto-select-first
-  dense
-  :items="items"
+       :rules="selectRules"
+       label="Birim seçiniz"
+        dense
+       :items="items"
+        required
 ></v-autocomplete>
         </v-col>
       </v-row>
@@ -64,7 +66,8 @@ export default {
       clickedSave(){
         //statusu al edit or new
         //ona göre işlem yap
-        if(this.status=="new"){
+        this.$refs.form.validate();
+        if(this.status=="new" && this.valid){
           let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value }
           this.saveMalzemeler(obj).then(()=>{
                 this.$toast.success(obj.malzeme_adi + " Eklendi", {
@@ -99,26 +102,24 @@ export default {
         return{
           malzeme_id:null,
           status:null,
-            value: 'Lütfen Seçiniz',
-            items: ['Lütfen Seçiniz','ADET', 'METRE', 'KG'],
+            items: ['ADET', 'METRE', 'KG'],
+            value: null,
         headers: [
           {text: 'Malzeme Adı', value: 'malzeme_adi'},
           {text: 'Malzeme Birim', value: 'malzeme_birim'},
           { text: 'Actions', value: 'actions', sortable: false },
         ],
         title:'Malzeme Tanımları',
-        MdlText:'Yeni Malzeme Tanımla',
-         valid: false,
+      MdlText:'Yeni Malzeme Tanımla',
+      valid: false,
       firstname: '',
       lastname: '',
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
+      selectRules: [
+        v => !!v || 'Malzeme Birim Gerekli',
       ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      nameRules: [
+        v => !!v || 'Malzeme adı Gerekli',
+        v => v.length <= 255 || 'Malzeme adı en fazla 255 karakter olabilir.',
       ],
         }
     }
