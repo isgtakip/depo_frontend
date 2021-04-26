@@ -56,7 +56,7 @@
         },
         deleteItem(val){
             this.$emit('clicked-delete', val)
-        },
+        }
     }
   }
 </script>

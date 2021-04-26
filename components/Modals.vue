@@ -12,6 +12,7 @@
           dark
           v-bind="attrs"
           v-on="on"
+          @click="newItem()"
         >
           {{mdlText}}
         </v-btn>
@@ -34,7 +35,7 @@
             <v-btn
               dark
               text
-              @click="dialog = false"
+              @click="saveItem()"
             >
               Kaydet
             </v-btn>
@@ -62,7 +63,11 @@
       mdlText: {
       type: String,
       default: null
-      }
+      },
+      itemno: {
+        type:Number,
+        default:null
+      },
     },
     data () {
       return {
@@ -72,5 +77,13 @@
         widgets: false,
       }
     },
+    methods:{
+       saveItem(){
+         this.$emit('clicked-save')
+       },
+       newItem(){
+         this.$emit('clicked-new')
+       }
+    }
   }
 </script>

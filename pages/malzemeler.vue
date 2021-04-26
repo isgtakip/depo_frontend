@@ -3,7 +3,8 @@
     <Modals
     :mdlText="MdlText"
     ref="modals"
-    :valId="ValId"
+    @clicked-save="clickedSave"
+    @clicked-new="clickedNew"
     >
          <v-form v-model="valid">
     <v-container fluid>
@@ -47,17 +48,48 @@ export default {
       }),
     },
     methods:{
-      ...mapActions({ getMalzemeler: 'malzemeler/getMalzemeler' }),
+      ...mapActions({ 
+        getMalzemeler: 'malzemeler/getMalzemeler',
+        saveMalzemeler: 'malzemeler/saveMalzemeler' 
+        }),
       //child datatable item clicked
       clickedEdit(val){
-          this.$refs.modals.dialog = true;
+          this.status='edit'
+          this.malzeme_id=val.malzeme_id
+          this.$refs.modals.dialog = true;   
       },
-
       clickedDelete(val){
-            alert(val.malzeme_id);
-            
+          this.malzeme_id=val.malzeme_id    
+      },
+      clickedSave(){
+        //statusu al edit or new
+        //ona göre işlem yap
+        if(this.status=="new"){
+          let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value }
+          this.saveMalzemeler(obj).then(()=>{
+                this.$toast.success(obj.malzeme_adi + " Eklendi", {
+                position: "bottom-right",
+                timeout: 5000,
+                closeOnClick: false,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.72,
+                showCloseButtonOnHover: true,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+              });
+              this.$refs.modals.dialog = false;
+          })
+        }
+         
+      },
+      clickedNew(){
+        this.status='new';
+        //yeni item ekleme
       }
-
     },
     created() {
         this.getMalzemeler()
@@ -65,6 +97,8 @@ export default {
     data(){
         
         return{
+          malzeme_id:null,
+          status:null,
             value: 'Lütfen Seçiniz',
             items: ['Lütfen Seçiniz','ADET', 'METRE', 'KG'],
         headers: [
