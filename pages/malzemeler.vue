@@ -52,21 +52,44 @@ export default {
     methods:{
       ...mapActions({ 
         getMalzemeler: 'malzemeler/getMalzemeler',
-        saveMalzemeler: 'malzemeler/saveMalzemeler' 
+        saveMalzemeler: 'malzemeler/saveMalzemeler',
+        editMalzemeler: 'malzemeler/editMalzemeler',
+        deleteMalzemeler: 'malzemeler/deleteMalzemeler'
         }),
       //child datatable item clicked
       clickedEdit(val){
           this.status='edit'
           this.malzeme_id=val.malzeme_id
+          this.firstname=val.malzeme_adi
+          this.value=val.malzeme_birim
+          this.MdlText="Malzeme Düzenle"
           this.$refs.modals.dialog = true;   
       },
       clickedDelete(val){
-          this.malzeme_id=val.malzeme_id    
+          this.malzeme_id=val.malzeme_id  
+          this.deleteMalzemeler(val.malzeme_id).then(()=>{
+             this.$toast.error(val.malzeme_adi + " Silindi", {
+                position: "bottom-right",
+                timeout: 5000,
+                closeOnClick: false,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.72,
+                showCloseButtonOnHover: true,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+              });
+          })  
       },
       clickedSave(){
         //statusu al edit or new
         //ona göre işlem yap
+        //validateyi çağır
         this.$refs.form.validate();
+
         if(this.status=="new" && this.valid){
           let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value }
           this.saveMalzemeler(obj).then(()=>{
@@ -84,13 +107,36 @@ export default {
                 icon: true,
                 rtl: false
               });
-              this.$refs.modals.dialog = false;
+               this.$refs.modals.dialog = false;
           })
         }
+        //edit işlemleri
+         if(this.status=="edit" && this.valid){
+            let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value, malzeme_id:this.malzeme_id }
+            this.editMalzemeler(obj).then(()=>{
+               this.$toast.success(obj.malzeme_adi + " Düzenlendi", {
+                position: "bottom-right",
+                timeout: 5000,
+                closeOnClick: false,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.72,
+                showCloseButtonOnHover: true,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+              });
+               this.$refs.modals.dialog = false;
+            })
+         }
+        
          
       },
       clickedNew(){
         this.status='new';
+        this.MdlText="Yeni Malzeme Tanımla"
         //yeni item ekleme
       }
     },

@@ -62,7 +62,7 @@
        links: [
           { text: 'Firmalar', icon: 'mdi-view-dashboard',route:'/firmalar' },
           { text: 'Malzemeler', icon: 'mdi-image',route:'/malzemeler'           },
-          { text: 'Malzeme Listesi', icon: 'mdi-help-box',route:'/' },
+          { text: 'Stok Takip', icon: 'mdi-help-box',route:'/' },
           { text: 'İrsaliye Listesi', icon: 'mdi-help-box',route:'/irsaliye-listesi' },
         ]
     }
