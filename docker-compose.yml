@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  depofrontend:
+    image: depofrontend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
