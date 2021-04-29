@@ -1,5 +1,4 @@
 <template>
- <v-card class="pt-3 pb-3 pl-3 mb-5" outlined>
     <v-dialog
       v-model="dialog"
       fullscreen
@@ -14,7 +13,7 @@
           v-on="on"
           @click="newItem()"
         >
-          {{mdlText}}
+          {{mdlBtnText}}
         </v-btn>
       </template>
       <v-card>
@@ -54,7 +53,6 @@
         <v-divider></v-divider>
       </v-card>
     </v-dialog>
-    </v-card>
 </template>
 <script>
 /*eslint-disable*/
@@ -68,6 +66,10 @@
         type:Number,
         default:null
       },
+      mdlBtnText:{
+        type:String,
+        default:null,
+      }
     },
     data () {
       return {

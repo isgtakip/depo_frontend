@@ -61,9 +61,9 @@
       drawer:null,
        links: [
           { text: 'Firmalar', icon: 'mdi-view-dashboard',route:'/firmalar' },
-          { text: 'Malzemeler', icon: 'mdi-image',route:'/malzemeler'           },
-          { text: 'Stok Takip', icon: 'mdi-help-box',route:'/' },
-          { text: 'İrsaliye Listesi', icon: 'mdi-help-box',route:'/irsaliye-listesi' },
+          { text: 'Stok Takip', icon: 'mdi-image',route:'/malzemeler'           },
+          { text: 'Stok Hareketleri', icon: 'mdi-help-box',route:'/stok-hareketleri' },
+          { text: 'Ayarlar', icon: 'mdi-help-box',route:'/ayarlar' },
         ]
     }
   }

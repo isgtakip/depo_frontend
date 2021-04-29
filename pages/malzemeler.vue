@@ -1,12 +1,8 @@
 <template>
 <div>
-    <Modals
-    :mdlText="MdlText"
-    ref="modals"
-    @clicked-save="clickedSave"
-    @clicked-new="clickedNew"
-    >
-         <v-form v-model="valid" ref="form">
+<v-card class="pt-3 pb-3 pl-3 mb-5" outlined>
+ <Modals :mdlText="MdlText" ref="modals" :mdlBtnText="btnText" @clicked-save="clickedSave" @clicked-new="clickedNew">
+  <v-form v-model="valid" ref="form">
     <v-container fluid>
       <v-row>
         <v-col
@@ -32,13 +28,14 @@
         dense
        :items="items"
         required
-></v-autocomplete>
+        ></v-autocomplete>
         </v-col>
       </v-row>
     </v-container>
   </v-form>
-    </Modals>
-    <Datatable :headers="headers" :items="malzemeler" :title="title" @clicked-edit="clickedEdit" @clicked-delete="clickedDelete"/></div>
+</Modals>
+</v-card>
+<Datatable :headers="headers" :items="malzemeler" :title="title" @clicked-edit="clickedEdit" @clicked-delete="clickedDelete"/></div>
 </template>
 <script>
 /*eslint-disable*/
@@ -152,14 +149,16 @@ export default {
             value: null,
         headers: [
           {text: 'Malzeme Adı', value: 'malzeme_adi'},
-          {text: 'Malzeme Birim', value: 'malzeme_birim'},
-          { text: 'Actions', value: 'actions', sortable: false },
+          {text: 'Miktar', value: 'malzeme_miktar'},
+          {text: 'Birim', value: 'malzeme_birim'},
+          {text: 'Actions', value: 'actions', sortable: false },
         ],
         title:'Malzeme Tanımları',
       MdlText:'Yeni Malzeme Tanımla',
       valid: false,
       firstname: '',
       lastname: '',
+      btnText:"Yeni Malzeme Tanımla",
       selectRules: [
         v => !!v || 'Malzeme Birim Gerekli',
       ],
