@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/wilary/public_html/stock/stk
+    - /bin/cp -R * $DEPLOYPATH
+
