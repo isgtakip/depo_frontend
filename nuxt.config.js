@@ -87,7 +87,7 @@ export default {
       }
     }
   },
-  router: { base: '/depo_frontend/' },
+ // router: { base: '/depo_frontend/' },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
