@@ -30,6 +30,22 @@
         required
         ></v-autocomplete>
         </v-col>
+          <v-col
+          cols="12"
+          md="12"
+        >
+ <v-autocomplete
+                        v-model="depoadlari"
+                        :rules="selectRules"
+                        label="Depo seçiniz"
+                        dense
+                        :items="depolar"
+                        item-text="depo_adi"
+                        item-value="depo_id"
+                        required
+                        class="mb-4"
+                        ></v-autocomplete>
+        </v-col>
       </v-row>
     </v-container>
   </v-form>
@@ -43,7 +59,8 @@ import { mapState,mapGetters,mapActions,mapMutations } from "vuex";
 export default {
     computed:{
       ...mapState({
-        malzemeler : state=> state.malzemeler.malzemeler
+        malzemeler : state=> state.malzemeler.malzemeler,
+        depolar: state=>state.depolar.depolar,
       }),
     },
     methods:{
@@ -51,7 +68,8 @@ export default {
         getMalzemeler: 'malzemeler/getMalzemeler',
         saveMalzemeler: 'malzemeler/saveMalzemeler',
         editMalzemeler: 'malzemeler/editMalzemeler',
-        deleteMalzemeler: 'malzemeler/deleteMalzemeler'
+        deleteMalzemeler: 'malzemeler/deleteMalzemeler',
+        getDepolar:'depolar/getDepolar'
         }),
       //child datatable item clicked
       clickedEdit(val){
@@ -59,6 +77,7 @@ export default {
           this.malzeme_id=val.malzeme_id
           this.firstname=val.malzeme_adi
           this.value=val.malzeme_birim
+          this.depoadlari=val.depo_id
           this.MdlText="Malzeme Düzenle"
           this.$refs.modals.dialog = true;   
       },
@@ -88,7 +107,7 @@ export default {
         this.$refs.form.validate();
 
         if(this.status=="new" && this.valid){
-          let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value }
+          let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value,depo_id:this.depoadlari }
           this.saveMalzemeler(obj).then(()=>{
                 this.$toast.success(obj.malzeme_adi + " Eklendi", {
                 position: "bottom-right",
@@ -109,7 +128,7 @@ export default {
         }
         //edit işlemleri
          if(this.status=="edit" && this.valid){
-            let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value, malzeme_id:this.malzeme_id }
+            let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value, malzeme_id:this.malzeme_id,depo_id:this.depoadlari }
             this.editMalzemeler(obj).then(()=>{
                this.$toast.success(obj.malzeme_adi + " Düzenlendi", {
                 position: "bottom-right",
@@ -139,10 +158,12 @@ export default {
     },
     created() {
         this.getMalzemeler()
+        this.getDepolar()
     },
     data(){
         
         return{
+          depoadlari:null,
           malzeme_id:null,
           status:null,
             items: ['ADET', 'METRE', 'KG'],
@@ -151,22 +172,23 @@ export default {
           {text: 'Malzeme Adı', value: 'malzeme_adi'},
           {text: 'Miktar', value: 'malzeme_miktar'},
           {text: 'Birim', value: 'malzeme_birim'},
+          {text: 'Depo', value: 'depo_adi'},
           {text: 'Actions', value: 'actions', sortable: false },
         ],
         title:'Malzeme Tanımları',
-      MdlText:'Yeni Malzeme Tanımla',
-      valid: false,
-      firstname: '',
-      lastname: '',
-      btnText:"Yeni Malzeme Tanımla",
-      selectRules: [
-        v => !!v || 'Malzeme Birim Gerekli',
-      ],
-      nameRules: [
-        v => !!v || 'Malzeme adı Gerekli',
-        v => v.length <= 255 || 'Malzeme adı en fazla 255 karakter olabilir.',
-      ],
-        }
-    }
+        MdlText:'Yeni Malzeme Tanımla',
+        valid: false,
+        firstname: '',
+        lastname: '',
+        btnText:"Yeni Malzeme Tanımla",
+        selectRules: [
+          v => !!v || 'Malzeme Birim Gerekli',
+        ],
+        nameRules: [
+          v => !!v || 'Malzeme adı Gerekli',
+          v => v.length <= 255 || 'Malzeme adı en fazla 255 karakter olabilir.',
+        ],
+          }
+      }
 }
 </script>

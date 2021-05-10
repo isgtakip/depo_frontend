@@ -4,6 +4,9 @@ export const getters ={
     getAllMalzemes(state){
         return state.malzemeler;
     },
+    getMalzemeBirimByID: (state) => (malzeme_id) => {
+        return state.malzemeler.find(malzeme => malzeme.malzeme_id === malzeme_id)
+    }
 }
 export const state = () => ({
     malzemeler : [],
@@ -22,7 +25,7 @@ export const mutations = {
         //state.malzemeler[ogIndex] = data;
     },
     DELETE_MALZEME(state,data){
-        const ogIndex = state.malzemeler.findIndex(t => t.malzeme_id === data.malzeme_id)
+        const ogIndex = state.malzemeler.findIndex(t => t.malzeme_id === data)
         state.malzemeler.splice(ogIndex, 1)
     }
 }
@@ -33,10 +36,12 @@ export const actions = {
     commit('SET_MALZEMELER',malzemeler)                  
     },
     
+    
     async saveMalzemeler ({commit}, request){
         var params = new URLSearchParams;
         params.append("malzeme_adi",request.malzeme_adi);
         params.append("malzeme_birim",request.malzeme_birim);
+        params.append("depo_id",request.depo_id)
 
         var gidecek = {
             params: params
@@ -50,6 +55,7 @@ export const actions = {
         var params = new URLSearchParams;
         params.append("malzeme_adi",request.malzeme_adi);
         params.append("malzeme_birim",request.malzeme_birim);
+        params.append("depo_id",request.depo_id)
 
         var gidecek = {
             params:params
@@ -65,7 +71,7 @@ export const actions = {
        
         
         let res = await this.$axios.delete("http://127.0.0.1:8000/api/malzemeler/"+request); 
-        commit('DELETE_MALZEME',res.data) 
+        commit('DELETE_MALZEME',request) 
 
     }
    

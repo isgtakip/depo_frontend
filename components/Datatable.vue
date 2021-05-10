@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card outlined>
     <v-card-title>
       {{this.title}}
       <v-spacer></v-spacer>
@@ -47,7 +47,7 @@
     },
     data () {
       return {
-        search: '',    
+        search: '', 
       }
     },
     methods:{

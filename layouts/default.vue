@@ -56,11 +56,11 @@
 <script>
 /*eslint-disable*/
   export default {
+    name: "default",
    data () {
     return {
       drawer:null,
        links: [
-          { text: 'Firmalar', icon: 'mdi-view-dashboard',route:'/firmalar' },
           { text: 'Stok Takip', icon: 'mdi-image',route:'/malzemeler'           },
           { text: 'Stok Hareketleri', icon: 'mdi-help-box',route:'/stok-hareketleri' },
           { text: 'Ayarlar', icon: 'mdi-help-box',route:'/ayarlar' },
