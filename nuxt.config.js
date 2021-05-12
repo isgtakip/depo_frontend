@@ -94,7 +94,7 @@ export default {
   },
  
   router: {
-    base: '/depo_frontend/'
+    base: 'http://stock.wilary.org/'
   }
 }
 
