@@ -94,6 +94,6 @@ export default {
   },
  
   router: {
-    base: 'http://stock.wilary.org/'
+    base: ''
   }
 }
