@@ -97,4 +97,3 @@ export default {
     base: 'http://stock.wilary.org/'
   }
 }
-
