@@ -93,7 +93,4 @@ export default {
   build: {
   },
  
-  router: {
-    base: '/'
-  }
 }
