@@ -31,7 +31,7 @@ export const mutations = {
 export const actions = {
 
     async getDepoSorumlulari({commit}){
-        const res = await this.$axios.$get('http://127.0.0.1:8000/api/depo-sorumlulari');
+        const res = await this.$axios.$get('/depo-sorumlulari');
         commit('SET_DEPO_SORUMLULARI',res); 
     },
 
@@ -45,7 +45,7 @@ export const actions = {
             params: params
         };
 
-        let res=await this.$axios.post("http://127.0.0.1:8000/api/depo-sorumlulari",null, gidecek);
+        let res=await this.$axios.post("/depo-sorumlulari",null, gidecek);
         commit('ADD_DEPO_SORUMLULARI',res.data[0]);
     },
 
@@ -59,7 +59,7 @@ export const actions = {
             params:params
         }
 
-        let res= await this.$axios.put("http://127.0.0.1:8000/api/depo-sorumlulari/"+request.depo_sorumlu_id,null, gidecek);
+        let res= await this.$axios.put("/depo-sorumlulari/"+request.depo_sorumlu_id,null, gidecek);
         commit('EDIT_DEPO_SORUMLULARI',res.data[0])
 
 
@@ -68,7 +68,7 @@ export const actions = {
     async deleteDepoSorumlulari({commit},request){
        
         
-        let res = await this.$axios.delete("http://127.0.0.1:8000/api/depo-sorumlulari/"+request); 
+        let res = await this.$axios.delete("/api/depo-sorumlulari/"+request); 
         commit('DELETE_DEPO_SORUMLU',request) 
 
     },

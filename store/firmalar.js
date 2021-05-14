@@ -26,7 +26,7 @@ export const mutations = {
 export const actions = {
 
     async getFirmalar({commit}){
-        const firmalar = await this.$axios.$get('http://127.0.0.1:8000/api/firmalar');
+        const firmalar = await this.$axios.$get('/firmalar');
         commit('SET_FIRMALAR',firmalar); 
     },
     async saveFirma ({commit}, request){
@@ -40,7 +40,7 @@ export const actions = {
             params: params
         };
 
-        let res=await this.$axios.post("http://127.0.0.1:8000/api/firmalar",null, gidecek);
+        let res=await this.$axios.post("/firmalar",null, gidecek);
         commit('ADD_FIRMA',res.data);
     },
 
@@ -55,7 +55,7 @@ export const actions = {
             params:params
         }
 
-        let res= await this.$axios.put("http://127.0.0.1:8000/api/firmalar/"+request.firma_id,null, gidecek);
+        let res= await this.$axios.put("/firmalar/"+request.firma_id,null, gidecek);
         commit('EDIT_FIRMA',res.data)
 
 
@@ -64,7 +64,7 @@ export const actions = {
     async deleteFirma({commit},request){
        
         
-        let res = await this.$axios.delete("http://127.0.0.1:8000/api/firmalar/"+request); 
+        let res = await this.$axios.delete("/firmalar/"+request); 
         commit('DELETE_FIRMA',request) 
 
     }

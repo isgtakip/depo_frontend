@@ -22,12 +22,12 @@ export const mutations = {
 export const actions = {
 
     async getStokHareketleri({commit}){
-        const res = await this.$axios.$get('http://127.0.0.1:8000/api/stok-hareketleri');
+        const res = await this.$axios.$get('/stok-hareketleri');
         commit('SET_STOK_HAREKETLERI',res); 
     },
     async saveStokHareketi ({commit}, request){
 
-        await this.$axios.post("http://127.0.0.1:8000/api/stok-hareketleri", request).then(res => {
+        await this.$axios.post("/stok-hareketleri", request).then(res => {
             commit('ADD_STOK_HAREKETI',res.data);
     });
        

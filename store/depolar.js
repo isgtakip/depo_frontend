@@ -27,7 +27,7 @@ export const mutations = {
 export const actions = {
 
     async getDepolar({commit}){
-        const depolar = await this.$axios.$get('http://127.0.0.1:8000/api/depolar');
+        const depolar = await this.$axios.$get('/depolar');
         commit('SET_DEPOLAR',depolar); 
     },
 
@@ -40,7 +40,7 @@ export const actions = {
             params: params
         };
 
-        let res=await this.$axios.post("http://127.0.0.1:8000/api/depolar",null, gidecek);
+        let res=await this.$axios.post("/depolar",null, gidecek);
         commit('ADD_DEPO',res.data);
     },
 
@@ -53,7 +53,7 @@ export const actions = {
             params:params
         }
 
-        let res= await this.$axios.put("http://127.0.0.1:8000/api/depolar/"+request.depo_id,null, gidecek);
+        let res= await this.$axios.put("/depolar/"+request.depo_id,null, gidecek);
         commit('EDIT_DEPO',res.data)
 
 
@@ -62,7 +62,7 @@ export const actions = {
     async deleteDepo({commit},request){
        
         
-        let res = await this.$axios.delete("http://127.0.0.1:8000/api/depolar/"+request); 
+        let res = await this.$axios.delete("/depolar/"+request); 
         commit('DELETE_DEPO',request) 
 
     }
