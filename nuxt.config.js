@@ -54,7 +54,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.API_URL,
+    baseURL: 'sarielektronik.net/api/public/api/',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

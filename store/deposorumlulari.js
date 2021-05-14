@@ -68,7 +68,7 @@ export const actions = {
     async deleteDepoSorumlulari({commit},request){
        
         
-        let res = await this.$axios.delete("/api/depo-sorumlulari/"+request); 
+        let res = await this.$axios.delete("/depo-sorumlulari/"+request); 
         commit('DELETE_DEPO_SORUMLU',request) 
 
     },
