@@ -3,9 +3,8 @@ import Vue from 'vue';
 export const getters={
 
 getSorumluByDepoID: (state) => (depo_id) => {
-return state.depo_sorumlulari.find(sorumlu => sorumlu.depo_id === depo_id)
+return state.depo_sorumlulari.filter(sorumlu => sorumlu.depo_id === depo_id)
 }
-
 }
 export const state = () => ({
     depo_sorumlulari : [],

@@ -276,13 +276,12 @@ export default {
        getSorumluByDepoID:'deposorumlulari/getSorumluByDepoID',
        getMalzemeBirimByID:'malzemeler/getMalzemeBirimByID',
      }),
-      depo_sorumlulari() {
+    /*depo_sorumlulari() {
         if(!this.depoadi) return []
         var sorumlularim = [];
         return sorumlularim.concat(this.getSorumluByDepoID(this.depoadi));
       },
- 
-    
+    */
   },
   created() {
         this.getDepoSorumlulari();
@@ -316,7 +315,10 @@ export default {
         },
       onChange(deger){
         if(deger=="depo"){
-          this.sorumluadi=[]
+          this.temp=[]
+          this.temp=this.getSorumluByDepoID(this.depoadi);
+       this.depo_sorumlulari=this.temp;
+          //
         }
         if(deger=="harekettipi"){
           this.tedarikturu=''
@@ -417,6 +419,7 @@ export default {
       return {
         stokvalid:false,
         malzeme_birimleri:[],
+        depo_sorumlulari:[],
         k:null,
         itemtext:'',
         itemvalue:'',
