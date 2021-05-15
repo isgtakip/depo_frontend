@@ -1,5 +1,6 @@
 <template><div>
-        <v-tabs v-model="tab" slider-color="yellow" background-color="transparent" color="black">
+
+        <v-tabs v-model="tab" slider-color="yellow" background-color="transparent" color="black"  show-arrows>
             <v-tab>DEPOLAR</v-tab>
             <v-tab>DEPO SORUMLU LİSTESİ</v-tab>
             <v-tab>SORUMLULAR</v-tab>
@@ -187,11 +188,11 @@ export default {
         firmalar : state=> state.firmalar.firmalar,
         depolar: state=>state.depolar.depolar,
       }),
-      
+
     },
     methods:{
       ...mapActions(
-        { 
+        {
         getDepolar:'depolar/getDepolar',
         saveDepo:'depolar/saveDepo',
         editDepo:'depolar/editDepo',
@@ -209,9 +210,9 @@ export default {
         saveFirma:'firmalar/saveFirma',
         editFirma:'firmalar/editFirma'
         }),
-      
+
       clickedNew(){
-        //hangi tabda olduğuna bak 
+        //hangi tabda olduğuna bak
         this.status='new'
         Vue.set(this.MdlText, this.tab, this.MdlNewText[this.tab]);
 
@@ -233,7 +234,7 @@ export default {
               });
       },
       clickedSave(){
-        //status ve sayfayı al 
+        //status ve sayfayı al
 
          if(this.tab==0) {
           this.$refs.depoform.validate();
@@ -242,7 +243,7 @@ export default {
                 let obj = {depo_adi: this.depoAd,depo_id:this.depo_id}
                 this.saveDepo(obj).then(()=>{
                     this.toastMessage(this.depoAd,'Eklendi')
-                    this.$refs.modalsdepolar.dialog = false; 
+                    this.$refs.modalsdepolar.dialog = false;
                 });
               }
               //depo düzenleme
@@ -250,10 +251,10 @@ export default {
                 let obj = {depo_adi: this.depoAd, depo_id:this.depo_id}
                 this.editDepo(obj).then(()=>{
                     this.toastMessage(this.depoAd,'Düzenlendi')
-                    this.$refs.modalsdepolar.dialog = false; 
+                    this.$refs.modalsdepolar.dialog = false;
                 });
                }
-        }      
+        }
         //depo sorumluları
         if(this.tab==1) {
           this.$refs.depolarform.validate();
@@ -262,29 +263,29 @@ export default {
                 let obj = {depo_id: this.depoadlari,sorumlu_id:this.sorumlulars}
                 this.saveDepoSorumlulari(obj).then(()=>{
                     this.toastMessage(this.depoadlari,'Eklendi')
-                    this.$refs.modalsdepo.dialog = false; 
+                    this.$refs.modalsdepo.dialog = false;
                 });
               }
               //depo düzenleme
                if(this.status=="edit" && this.depovalid){
-                   
+
                 let obj = {depo_sorumlu_id: this.depo_sorumlu_id, sorumlu_id:this.sorumlulars, depo_id:this.depoadlari}
                 this.editDepoSorumlulari(obj).then(()=>{
                     this.toastMessage(this.depoAds,'Düzenlendi')
-                    this.$refs.modalsdepo.dialog = false; 
+                    this.$refs.modalsdepo.dialog = false;
                 });
                }
-        }     
+        }
         //sorumlular
         if(this.tab==2) {
-          //formu validate et 
+          //formu validate et
           this.$refs.sorumluform.validate();
              //yeni sorumlu ekleme işlemleri
               if(this.status=="new" && this.sorumluvalid){
                 let obj = {sorumlu_ad_soyad: this.sorumluadisoyadi}
                 this.saveSorumlular(obj).then(()=>{
                     this.toastMessage(this.sorumluadisoyadi,'Eklendi')
-                    this.$refs.modalssorumlular.dialog = false; 
+                    this.$refs.modalssorumlular.dialog = false;
                 });
               }
               //edit
@@ -292,19 +293,19 @@ export default {
                 let obj = {sorumlu_ad_soyad: this.sorumluadisoyadi, sorumlu_id:this.sorumlu_id}
                 this.editSorumlular(obj).then(()=>{
                     this.toastMessage(this.sorumluadisoyadi,'Düzenlendi')
-                    this.$refs.modalssorumlular.dialog = false; 
+                    this.$refs.modalssorumlular.dialog = false;
                 });
               }
           //sorumlu edit işlemleri
         }
          if(this.tab==3) {
-          //firmalar new  işlemleri 
+          //firmalar new  işlemleri
           this.$refs.firmalarform.validate();
             if(this.status=="new" && this.firmaValid){
                 let obj = {firma_unvan: this.firmaUnvan,firma_tur:this.firmaturleri,firma_tip:this.firmatipleri}
                 this.saveFirma(obj).then(()=>{
                     this.toastMessage(this.firmaUnvan,'Eklendi')
-                    this.$refs.modalsfirmalar.dialog = false; 
+                    this.$refs.modalsfirmalar.dialog = false;
                 });
               }
               //edit
@@ -312,42 +313,42 @@ export default {
                 let obj = {firma_unvan: this.firmaUnvan, firma_tur:this.firmaturleri, firma_tip:this.firmatipleri, firma_id:this.firma_id}
                 this.editFirma(obj).then(()=>{
                     this.toastMessage(this.firmaUnvan,'Düzenlendi')
-                    this.$refs.modalsfirmalar.dialog = false; 
+                    this.$refs.modalsfirmalar.dialog = false;
                 });
               }
          }
-        //bulunduğun tabı al 
-        //validate et 
-        //statuse bak 
+        //bulunduğun tabı al
+        //validate et
+        //statuse bak
 
       },
-     
+
       clickedEdit(val){
          this.status='edit'
          Vue.set(this.MdlText, this.tab, this.MdlEditText[this.tab]);
          //modalsdepolar
          if(this.tab==0) {
-          //depolar edit işlemleri 
+          //depolar edit işlemleri
           this.depoAd=val.depo_adi
           this.depo_id=val.depo_id
-          this.$refs.modalsdepolar.dialog = true; 
+          this.$refs.modalsdepolar.dialog = true;
         }
          if(this.tab==1) {
-          //depolar edit işlemleri 
+          //depolar edit işlemleri
           this.sorumlulars=val.sorumlu_id
           this.depo_sorumlu_id=val.depo_sorumlu_id
           this.depoadlari=val.depo_id
           this.depoAds=val.depo_adi
-          this.$refs.modalsdepo.dialog = true; 
+          this.$refs.modalsdepo.dialog = true;
         }
         if(this.tab==2) {
-          //sorumlular edit işlemleri 
+          //sorumlular edit işlemleri
           this.sorumluadisoyadi=val.sorumlu_ad_soyad
           this.sorumlu_id=val.sorumlu_id;
-          this.$refs.modalssorumlular.dialog = true; 
+          this.$refs.modalssorumlular.dialog = true;
         }
          if(this.tab==3) {
-          //firmalar edit işlemleri 
+          //firmalar edit işlemleri
           this.firmaUnvan=val.firma_unvan
           this.firmaturleri=val.firma_tur
           this.firmatipleri=val.firma_tip
@@ -359,23 +360,23 @@ export default {
          if(this.tab==0) {
           this.deleteDepo(val.depo_id).then(()=>{
              this.toastMessage(val.depo_adi,'Silindi')
-         })  
+         })
         }
          if(this.tab==1) {
            this.deleteDepoSorumlulari(val.depo_sorumlu_id).then(()=>{
              this.toastMessage(val.depo_sorumlu_id,'Silindi')
-           })  
+           })
         }
          if(this.tab==2) {
           this.deleteSorumlular(val.sorumlu_id).then(()=>{
              this.toastMessage(val.sorumlu_ad_soyad,'Silindi')
-         })  
+         })
         }
          if(this.tab==3) {
-         //delete it 
+         //delete it
            this.deleteFirma(val.firma_id).then(()=>{
              this.toastMessage(val.firma_unvan,'Silindi')
-         })  
+         })
         }
 
       },
@@ -412,7 +413,7 @@ export default {
             {text: 'Depo Adı', value: 'depo_adi'},
             {text: 'Actions', value: 'actions', sortable: false }
           ],
-          [ 
+          [
           {text: 'Depo Adı', value: 'depo_adi'},
           {text: 'Depo Sorumlusu', value: 'sorumlu_ad_soyad'},
           {text: 'Actions', value: 'actions', sortable: false }
