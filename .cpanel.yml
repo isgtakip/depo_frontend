@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/wilary/public_html/stock/stk
+    - export DEPLOYPATH=/home/sarielek/public_html/
     - /bin/cp -R * $DEPLOYPATH
 
