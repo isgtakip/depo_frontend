@@ -113,8 +113,8 @@ $axios.defaults.withCredentials = true
 
      async created() {
         //this.getPermissions();  
-
-     const { data: permissions } = await this.$axios.get('http://localhost:8000/api/getAllPermissionsAttribute');
+     this.$axios.setBaseURL(process.env.apiURL)
+     const { data: permissions } = await this.$axios.get('/getAllPermissionsAttribute');
     
       this.$gates.setPermissions(permissions);
       console.log("ffhgfh")

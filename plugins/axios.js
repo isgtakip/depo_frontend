@@ -14,9 +14,7 @@ export default function (ctx, inject) {
 
 
   const starWarsApi = $axios.create()
-  starWarsApi.setBaseURL('http://localhost:8000/api/')
- 
-
+  starWarsApi.setBaseURL(process.env.apiURL)
    starWarsApi.onResponse((response) => {
   
 

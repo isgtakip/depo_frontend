@@ -5,6 +5,14 @@
   <v-form v-model="valid" ref="form">
     <v-container fluid>
       <v-row>
+         <v-col
+          cols="12"
+          md="12"
+        ><v-text-field
+            v-model="sapkod"
+            label="Sap Kodu"
+          ></v-text-field>
+        </v-col>
         <v-col
           cols="12"
           md="12"
@@ -34,6 +42,11 @@
           cols="12"
           md="12"
         >
+        <v-text-field
+            v-model="aciklama"
+            :counter="255"
+            label="Açıklama"
+          ></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -49,7 +62,6 @@ export default {
     computed:{
       ...mapState({
         malzemeler : state=> state.malzemeler.malzemeler,
-        depolar: state=>state.depolar.depolar,
       }),
     },
     methods:{
@@ -58,7 +70,6 @@ export default {
         saveMalzemeler: 'malzemeler/saveMalzemeler',
         editMalzemeler: 'malzemeler/editMalzemeler',
         deleteMalzemeler: 'malzemeler/deleteMalzemeler',
-        getDepolar:'depolar/getDepolar'
         }),
       //child datatable item clicked
       clickedEdit(val){
@@ -95,7 +106,7 @@ export default {
         this.$refs.form.validate();
 
         if(this.status=="new" && this.valid){
-          let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value }
+          let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value,sap_kod:this.sapkod,m_aciklama:this.aciklama }
           this.saveMalzemeler(obj).then(()=>{
                 this.$toast.success(obj.malzeme_adi + " Eklendi", {
                 position: "bottom-right",
@@ -116,7 +127,7 @@ export default {
         }
         //edit işlemleri
          if(this.status=="edit" && this.valid){
-            let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value, malzeme_id:this.malzeme_id }
+            let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value, malzeme_id:this.malzeme_id,sap_kod:this.sapkod,m_aciklama:this.aciklama  }
             this.editMalzemeler(obj).then(()=>{
                this.$toast.success(obj.malzeme_adi + " Düzenlendi", {
                 position: "bottom-right",
@@ -146,20 +157,20 @@ export default {
     },
     created() {
         this.getMalzemeler()
-        this.getDepolar()
     },
     
     data(){
         
         return{
-          depoadlari:null,
           malzeme_id:null,
           status:null,
             items: ['ADET', 'METRE', 'KG'],
             value: null,
         headers: [
+          {text: 'Sap Kodu', value: 'sap_kod'},
           {text: 'Malzeme Adı', value: 'malzeme_adi'},
           {text: 'Birim', value: 'malzeme_birim'},
+          {text: 'Açıklama', value: 'm_aciklama'},
           {text: 'Actions', value: 'actions', sortable: false },
         ],
         title:'Malzeme Tanımları',
@@ -167,6 +178,8 @@ export default {
         valid: false,
         firstname: '',
         lastname: '',
+        sapkod:'',
+        aciklama:'',
         btnText:"Yeni Malzeme Tanımla",
         selectRules: [
           v => !!v || 'Malzeme Birim Gerekli',

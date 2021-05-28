@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-
+require('dotenv').config()
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -48,7 +48,9 @@ export default {
     '@nuxt/content',
     "vue-toastification/nuxt",
     '@nuxtjs/auth-next',
+    '@nuxtjs/dotenv',
   ],
+
 
   router: {
     middleware: ['auth','custom'],
@@ -71,10 +73,11 @@ export default {
       home: "/"
 
     },
+
     strategies: {
       'laravelSanctum': {
         provider: 'laravel/sanctum',
-        url: 'http://localhost:8000',
+        url: process.env.baseURL,
         endpoints: {
           login: {
             url: '/login',
@@ -103,9 +106,6 @@ export default {
 //Set-Cookie: widget_session=abc123; SameSite=None; Secure
 
 
-
-
-    
     plugins: [
       '~/plugins/axios.js',
       '~/plugins/laravel_permissions.js',
