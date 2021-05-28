@@ -3,8 +3,6 @@
         <v-tabs v-model="tab" slider-color="yellow" background-color="transparent" color="black"  show-arrows>
             <v-tab>DEPOLAR</v-tab>
             <v-tab>DEPO SORUMLU LİSTESİ</v-tab>
-            <v-tab>SORUMLULAR</v-tab>
-            <v-tab>FİRMALAR</v-tab>
         </v-tabs>
  <v-tabs-items v-model="tab">
       <v-tab-item>
@@ -87,91 +85,6 @@
        </v-card>
        <Datatable :headers="headers[1]" :items="deposorumlulari" :title="title[1]" @clicked-edit="clickedEdit" @clicked-delete="clickedDelete"/>
       </v-tab-item>
-      <v-tab-item>
-      <v-card class="pt-3 pb-3 pl-3 mb-5 mt-5" outlined>
-        <Modals :mdlText="MdlText[2]" :ref="refs[2]" :mdlBtnText="btnText[2]" @clicked-save="clickedSave" @clicked-new="clickedNew">
-           <v-form v-model="sorumluvalid" ref="sorumluform">
-                <v-container fluid>
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      md="12"
-                    >
-                      <v-text-field
-                        v-model="sorumluadisoyadi"
-                        :rules="sorumlurules"
-                        :counter="255"
-                        label="Sorumlu Adı Soyadı"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      md="12"
-                    >
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-        </Modals>
-         </v-card>
-        <Datatable :headers="headers[2]" :items="sorumlular" :title="title[2]" @clicked-edit="clickedEdit" @clicked-delete="clickedDelete"/>
-      </v-tab-item>
-      <v-tab-item>
-       <v-card class="pt-3 pb-3 pl-3 mb-5 mt-5" outlined>
-        <Modals :mdlText="MdlText[3]" :ref="refs[3]" :mdlBtnText="btnText[3]" @clicked-save="clickedSave" @clicked-new="clickedNew">
-           <v-form v-model="firmaValid" ref="firmalarform">
-                <v-container fluid>
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      md="12"
-                    >
-                      <v-text-field
-                        v-model="firmaUnvan"
-                        :rules="sorumlurules"
-                        :counter="255"
-                        label="Firma Tam Ünvan"
-                        required
-                        dense
-                        class="mb-8"
-                      ></v-text-field>
-
-                      <v-autocomplete
-                      v-model="firmaturleri"
-                      :rules="selectRules"
-                      label="Firma Türü seçiniz"
-                        dense
-                      :items="firmaturs"
-                      item-text="value"
-                        item-value="firma_tur"
-                        required
-                        class="mb-4"
-                        ></v-autocomplete>
-
-                      <v-autocomplete
-                      v-model="firmatipleri"
-                      :rules="selectRules"
-                        label="Firma tipi seçiniz"
-                        dense
-                       :items="firmatips"
-                        required
-                        item-text="value"
-                        item-value="firma_tip"
-                        ></v-autocomplete>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      md="12"
-                    >
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-        </Modals>
-       </v-card>
-        <Datatable :headers="headers[3]" :items="firmalar" :title="title[3]" @clicked-edit="clickedEdit" @clicked-delete="clickedDelete"/>
-      </v-tab-item>
 </v-tabs-items>
 
 </div>
@@ -181,6 +94,7 @@
 import { mapState,mapGetters,mapActions,mapMutations } from "vuex";
 import Vue from 'vue';
 export default {
+
   computed:{
       ...mapState({
         deposorumlulari : state=> state.deposorumlulari.depo_sorumlulari,
@@ -199,22 +113,19 @@ export default {
         deleteDepo:'depolar/deleteDepo',
         getDepoSorumlulari: 'deposorumlulari/getDepoSorumlulari',
         getSorumlular : 'sorumlular/getSorumlular',
-        getFirmalar : 'firmalar/getFirmalar',
         saveSorumlular :'sorumlular/saveSorumlular',
         editSorumlular: 'sorumlular/editSorumlular',
         deleteSorumlular: 'sorumlular/deleteSorumlular',
         saveDepoSorumlulari:'deposorumlulari/saveDepoSorumlulari',
         editDepoSorumlulari :'deposorumlulari/editDepoSorumlulari',
         deleteDepoSorumlulari :'deposorumlulari/deleteDepoSorumlulari',
-        deleteFirma:'firmalar/deleteFirma',
-        saveFirma:'firmalar/saveFirma',
-        editFirma:'firmalar/editFirma'
         }),
 
       clickedNew(){
         //hangi tabda olduğuna bak
         this.status='new'
         Vue.set(this.MdlText, this.tab, this.MdlNewText[this.tab]);
+        console.log("sdasd")
 
       },
       toastMessage(deger,durum){
@@ -298,25 +209,6 @@ export default {
               }
           //sorumlu edit işlemleri
         }
-         if(this.tab==3) {
-          //firmalar new  işlemleri
-          this.$refs.firmalarform.validate();
-            if(this.status=="new" && this.firmaValid){
-                let obj = {firma_unvan: this.firmaUnvan,firma_tur:this.firmaturleri,firma_tip:this.firmatipleri}
-                this.saveFirma(obj).then(()=>{
-                    this.toastMessage(this.firmaUnvan,'Eklendi')
-                    this.$refs.modalsfirmalar.dialog = false;
-                });
-              }
-              //edit
-              if(this.status=="edit" && this.firmaValid){
-                let obj = {firma_unvan: this.firmaUnvan, firma_tur:this.firmaturleri, firma_tip:this.firmatipleri, firma_id:this.firma_id}
-                this.editFirma(obj).then(()=>{
-                    this.toastMessage(this.firmaUnvan,'Düzenlendi')
-                    this.$refs.modalsfirmalar.dialog = false;
-                });
-              }
-         }
         //bulunduğun tabı al
         //validate et
         //statuse bak
@@ -347,14 +239,6 @@ export default {
           this.sorumlu_id=val.sorumlu_id;
           this.$refs.modalssorumlular.dialog = true;
         }
-         if(this.tab==3) {
-          //firmalar edit işlemleri
-          this.firmaUnvan=val.firma_unvan
-          this.firmaturleri=val.firma_tur
-          this.firmatipleri=val.firma_tip
-          this.firma_id=val.firma_id
-          this.$refs.modalsfirmalar.dialog = true;
-        }
       },
       clickedDelete(val){
          if(this.tab==0) {
@@ -372,19 +256,11 @@ export default {
              this.toastMessage(val.sorumlu_ad_soyad,'Silindi')
          })
         }
-         if(this.tab==3) {
-         //delete it
-           this.deleteFirma(val.firma_id).then(()=>{
-             this.toastMessage(val.firma_unvan,'Silindi')
-         })
-        }
-
       },
      },
     created() {
         this.getDepoSorumlulari();
         this.getSorumlular();
-        this.getFirmalar();
         this.getDepolar();
     },
     data () {
@@ -422,25 +298,7 @@ export default {
           {text: 'Sorumlu Adı Soyadı', value: 'sorumlu_ad_soyad'},
           {text: 'Actions', value: 'actions', sortable: false }
           ],
-          [
-          {text: 'Firma Ünvan', value: 'firma_unvan'},
-          {text: 'Firma Tür', value: 'firma_tur' },
-          {text: 'Firma Tip', value: 'firma_tip' },
-          {text: 'Actions', value: 'actions', sortable: false }
-          ]],
-          firmatips:[
-            {firma_tip:1,value:'TÜZEL'},
-            {firma_tip:2,value:'ŞAHIS'}
-          ],
-          firmaturs:[
-            {firma_tur:1,value:'ANA FİRMA'},
-            {firma_tur:2,value:'TAŞERON'},
-            {firma_tur:3,value:'TEDARİKÇİ'},
-          ],
-          firmaUnvan:'',
-          firmaturleri:null,
-          firmatipleri:null,
-          firmaValid:false,
+        ],
           depoadi:'',
           depovalid:false,
           sorumlulars:null,

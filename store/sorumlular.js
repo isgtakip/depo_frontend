@@ -26,7 +26,7 @@ export const mutations = {
 export const actions = {
 
     async getSorumlular({commit}){
-        const sorumlular = await this.$axios.$get('/sorumlular');
+        const sorumlular = await this.$starWarsApi.$get('/sorumlular');
         commit('SET_SORUMLULAR',sorumlular); 
     },
 
@@ -39,7 +39,7 @@ export const actions = {
             params: params
         };
 
-        let res=await this.$axios.post("/sorumlular",null, gidecek);
+        let res=await this.$starWarsApi.post("/sorumlular",null, gidecek);
         commit('ADD_SORUMLU',res.data);
     },
 
@@ -52,7 +52,7 @@ export const actions = {
             params:params
         }
 
-        let res= await this.$axios.put("/sorumlular/"+request.sorumlu_id,null, gidecek);
+        let res= await this.$starWarsApi.put("/sorumlular/"+request.sorumlu_id,null, gidecek);
         commit('EDIT_SORUMLU',res.data)
 
 
@@ -61,7 +61,7 @@ export const actions = {
     async deleteSorumlular({commit},request){
        
         
-        let res = await this.$axios.delete("/sorumlular/"+request); 
+        let res = await this.$starWarsApi.delete("/sorumlular/"+request); 
         commit('DELETE_SORUMLU',request) 
 
     }

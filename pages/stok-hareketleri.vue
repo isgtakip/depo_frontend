@@ -263,6 +263,14 @@
 import { mapState,mapGetters,mapActions,mapMutations } from "vuex";
 import Vue from 'vue';
 export default {
+  /*
+  async asyncData ({ $axios, $gates }) {
+      const [permissions] = await Promise.all([
+      $axios.get('http://localhost:8000/api/getAllPermissionsAttribute'),
+    ])
+    
+    $gates.setPermissions(permissions.data)
+  },*/
   computed:{
       ...mapState({
         deposorumlulari : state=> state.deposorumlulari.depo_sorumlulari,

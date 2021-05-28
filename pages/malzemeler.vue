@@ -1,6 +1,6 @@
 <template>
 <div>
-<v-card class="pt-3 pb-3 pl-3 mb-5" outlined>
+<v-card class="pt-3 pb-3 pl-3 mb-5" outlined v-can="'malzeme-create'">
  <Modals :mdlText="MdlText" ref="modals" :mdlBtnText="btnText" @clicked-save="clickedSave" @clicked-new="clickedNew">
   <v-form v-model="valid" ref="form">
     <v-container fluid>
@@ -34,17 +34,6 @@
           cols="12"
           md="12"
         >
- <v-autocomplete
-                        v-model="depoadlari"
-                        :rules="selectRules"
-                        label="Depo seçiniz"
-                        dense
-                        :items="depolar"
-                        item-text="depo_adi"
-                        item-value="depo_id"
-                        required
-                        class="mb-4"
-                        ></v-autocomplete>
         </v-col>
       </v-row>
     </v-container>
@@ -77,7 +66,6 @@ export default {
           this.malzeme_id=val.malzeme_id
           this.firstname=val.malzeme_adi
           this.value=val.malzeme_birim
-          this.depoadlari=val.depo_id
           this.MdlText="Malzeme Düzenle"
           this.$refs.modals.dialog = true;   
       },
@@ -107,7 +95,7 @@ export default {
         this.$refs.form.validate();
 
         if(this.status=="new" && this.valid){
-          let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value,depo_id:this.depoadlari }
+          let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value }
           this.saveMalzemeler(obj).then(()=>{
                 this.$toast.success(obj.malzeme_adi + " Eklendi", {
                 position: "bottom-right",
@@ -128,7 +116,7 @@ export default {
         }
         //edit işlemleri
          if(this.status=="edit" && this.valid){
-            let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value, malzeme_id:this.malzeme_id,depo_id:this.depoadlari }
+            let obj = { malzeme_adi: this.firstname, malzeme_birim: this.value, malzeme_id:this.malzeme_id }
             this.editMalzemeler(obj).then(()=>{
                this.$toast.success(obj.malzeme_adi + " Düzenlendi", {
                 position: "bottom-right",
@@ -160,6 +148,7 @@ export default {
         this.getMalzemeler()
         this.getDepolar()
     },
+    
     data(){
         
         return{
@@ -170,9 +159,7 @@ export default {
             value: null,
         headers: [
           {text: 'Malzeme Adı', value: 'malzeme_adi'},
-          {text: 'Miktar', value: 'malzeme_miktar'},
           {text: 'Birim', value: 'malzeme_birim'},
-          {text: 'Depo', value: 'depo_adi'},
           {text: 'Actions', value: 'actions', sortable: false },
         ],
         title:'Malzeme Tanımları',

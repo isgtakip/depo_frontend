@@ -26,7 +26,7 @@ export const mutations = {
 export const actions = {
 
     async getFirmalar({commit}){
-        const firmalar = await this.$axios.$get('/firmalar');
+        const firmalar = await this.$starWarsApi.$get('/firmalar');
         commit('SET_FIRMALAR',firmalar); 
     },
     async saveFirma ({commit}, request){
@@ -40,7 +40,7 @@ export const actions = {
             params: params
         };
 
-        let res=await this.$axios.post("/firmalar",null, gidecek);
+        let res=await this.$starWarsApi.post("/firmalar",null, gidecek);
         commit('ADD_FIRMA',res.data);
     },
 
@@ -55,7 +55,7 @@ export const actions = {
             params:params
         }
 
-        let res= await this.$axios.put("/firmalar/"+request.firma_id,null, gidecek);
+        let res= await this.$starWarsApi.put("/firmalar/"+request.firma_id,null, gidecek);
         commit('EDIT_FIRMA',res.data)
 
 
@@ -64,7 +64,7 @@ export const actions = {
     async deleteFirma({commit},request){
        
         
-        let res = await this.$axios.delete("/firmalar/"+request); 
+        let res = await this.$starWarsApi.delete("/firmalar/"+request); 
         commit('DELETE_FIRMA',request) 
 
     }

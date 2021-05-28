@@ -30,7 +30,7 @@ export const mutations = {
 export const actions = {
 
     async getDepoSorumlulari({commit}){
-        const res = await this.$axios.$get('/depo-sorumlulari');
+        const res = await this.$starWarsApi.$get('/depo-sorumlulari');
         commit('SET_DEPO_SORUMLULARI',res); 
     },
 
@@ -44,7 +44,7 @@ export const actions = {
             params: params
         };
 
-        let res=await this.$axios.post("/depo-sorumlulari",null, gidecek);
+        let res=await this.$starWarsApi.post("/depo-sorumlulari",null, gidecek);
         commit('ADD_DEPO_SORUMLULARI',res.data[0]);
     },
 
@@ -58,7 +58,7 @@ export const actions = {
             params:params
         }
 
-        let res= await this.$axios.put("/depo-sorumlulari/"+request.depo_sorumlu_id,null, gidecek);
+        let res= await this.$starWarsApi.put("/depo-sorumlulari/"+request.depo_sorumlu_id,null, gidecek);
         commit('EDIT_DEPO_SORUMLULARI',res.data[0])
 
 
@@ -67,7 +67,7 @@ export const actions = {
     async deleteDepoSorumlulari({commit},request){
        
         
-        let res = await this.$axios.delete("/depo-sorumlulari/"+request); 
+        let res = await this.$starWarsApi.delete("/depo-sorumlulari/"+request); 
         commit('DELETE_DEPO_SORUMLU',request) 
 
     },

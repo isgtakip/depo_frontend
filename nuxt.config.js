@@ -1,8 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
 
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr:false,
+
+ 
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -27,35 +30,95 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: ['@/plugins/axios.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    // https://go.nuxtjs.dev/content
     '@nuxt/content',
     "vue-toastification/nuxt",
+    '@nuxtjs/auth-next',
   ],
+
+  router: {
+    middleware: ['auth','custom'],
+  },
+
+
+  auth: {
+    cookie: {
+      options: {
+        secure: true,
+        name: 'XSRF-TOKEN',
+        secure: true
+      },
+    },
+
+    redirect: {
+      login: "/login",
+      logout: "/login",
+      callback: false,
+      home: "/"
+
+    },
+    strategies: {
+      'laravelSanctum': {
+        provider: 'laravel/sanctum',
+        url: 'http://localhost:8000',
+        endpoints: {
+          login: {
+            url: '/login',
+            method: 'post',
+            propertyName:false,
+            withCredentials: true, 
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Content-Type': 'application/json'
+              }
+          },
+        
+          user: { 
+            url: '/api/user', 
+            method: 'get', 
+            propertyName: false,
+            withCredentials: true, 
+                    headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                    }
+        }
+        },
+      },
+    },
+//Set-Cookie: widget_session=abc123; SameSite=None; Secure
+
+
+
+
+    
+    plugins: [
+      '~/plugins/axios.js',
+      '~/plugins/laravel_permissions.js',
+      '~/plugins/ability.js',
+    ]
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "http://sarielektronik.net/api/public/api/",
+    credentials:true,
   },
+
+
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -89,11 +152,12 @@ export default {
       }
     }
   },
- // router: { base: '/depo_frontend/' },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  cache: false
+
   },
+
+  
 
 }

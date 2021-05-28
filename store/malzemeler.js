@@ -32,7 +32,7 @@ export const mutations = {
 export const actions = {
 
     async getMalzemeler ({commit}) {
-    const malzemeler = await this.$axios.$get('/malzemeler')
+    const malzemeler = await this.$starWarsApi.$get('/malzemeler')
     commit('SET_MALZEMELER',malzemeler)                  
     },
     
@@ -47,7 +47,7 @@ export const actions = {
             params: params
         };
 
-        let res=await this.$axios.post("/malzemeler",null, gidecek);
+        let res=await this.$starWarsApi.post("/malzemeler",null, gidecek);
         commit('ADD_MALZEME',res.data);
     },
     async editMalzemeler ({commit},request){
@@ -61,7 +61,7 @@ export const actions = {
             params:params
         }
 
-        let res= await this.$axios.put("/malzemeler/"+request.malzeme_id,null, gidecek);
+        let res= await this.$starWarsApi.put("/malzemeler/"+request.malzeme_id,null, gidecek);
         commit('EDIT_MALZEME',res.data)
 
 
@@ -70,7 +70,7 @@ export const actions = {
     async deleteMalzemeler({commit},request){
        
         
-        let res = await this.$axios.delete("/malzemeler/"+request); 
+        let res = await this.$starWarsApi.delete("/malzemeler/"+request); 
         commit('DELETE_MALZEME',request) 
 
     }
