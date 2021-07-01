@@ -17,6 +17,10 @@
       :items="items"
       :search="search"
     >
+    <template v-for="slot in slots" v-slot:[`item.${slot.slotName}`]="{ item }">
+      <slot :name="slot.slotName" :degisken="item"></slot>
+    </template>
+
      <template v-slot:[`item.actions`]="{ item }">
          <v-icon
             small
@@ -31,10 +35,13 @@
 <script>
 /*eslint-disable*/
   export default {
-    props:{
-      headers: {
+    props:{headers: {
       type: Array,
       default: null
+    },
+    slots:{
+      type:Array,
+      default:null
     },
     items: {
       type: Array,
@@ -51,6 +58,7 @@
       }
     },
     methods:{
+
         editItem(val){
             this.$emit('clicked-edit', val)
         },

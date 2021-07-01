@@ -8,19 +8,8 @@ export default function (ctx, inject) {
     redirect,                                                                                                                                                                            
   } = ctx;
 
-       
-  
-
-
 
   const starWarsApi = $axios.create()
   starWarsApi.setBaseURL(process.env.apiURL)
-   starWarsApi.onResponse((response) => {
-  
-
-  })
-
-
-
   inject('starWarsApi', starWarsApi)
 }

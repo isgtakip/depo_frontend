@@ -5,7 +5,5 @@
 /*eslint-disable*/
 export default {
   middleware:'custom',
-   
-  
 }
 </script>

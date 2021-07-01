@@ -255,7 +255,24 @@
         </div>
     </Modals>
     </v-card>
-  <Datatable :headers="headers" :items="stokhareketleri" :title="title" @clicked-edit="clickedEdit" @clicked-delete="clickedDelete"/>
+  <Datatable
+  :headers="headers"
+  :items="stokhareketleri"
+  :title="title"
+  :slots="slots"
+  @clicked-edit="clickedEdit"
+  @clicked-delete="clickedDelete">
+<template v-slot:hareket_tipi="{ degisken }">
+  <v-chip
+        :color="getColor(degisken.hareket_tipi)"
+        small
+        dark
+        label
+      >
+      {{degisken.hareket_tipi}}
+      </v-chip>
+</template>
+  </Datatable>
     </div>
 </template>
 <script>
@@ -325,7 +342,7 @@ export default {
         if(deger=="depo"){
           this.temp=[]
           this.temp=this.getSorumluByDepoID(this.depoadi);
-       this.depo_sorumlulari=this.temp;
+          this.depo_sorumlulari=this.temp;
           //
         }
         if(deger=="harekettipi"){
@@ -362,6 +379,10 @@ export default {
           }
         }
         
+      },
+      getColor (calories) {
+        if (calories == 'GİRİŞ') return 'green'
+        else if (calories == 'ÇIKIŞ') return 'red'
       },
       clickedEdit(val){
       this.status="edit"
@@ -425,6 +446,9 @@ export default {
    },
    data () {
       return {
+        slots:[{ 
+          Id: 1, slotName: 'hareket_tipi'
+          }],
         stokvalid:false,
         malzeme_birimleri:[],
         depo_sorumlulari:[],

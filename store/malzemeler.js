@@ -41,7 +41,8 @@ export const actions = {
         var params = new URLSearchParams;
         params.append("malzeme_adi",request.malzeme_adi);
         params.append("malzeme_birim",request.malzeme_birim);
-        params.append("depo_id",request.depo_id)
+        params.append("m_aciklama",request.m_aciklama);
+        params.append("sap_kod",request.sap_kod);
 
         var gidecek = {
             params: params
@@ -55,7 +56,8 @@ export const actions = {
         var params = new URLSearchParams;
         params.append("malzeme_adi",request.malzeme_adi);
         params.append("malzeme_birim",request.malzeme_birim);
-        params.append("depo_id",request.depo_id)
+        params.append("m_aciklama",request.m_aciklama);
+        params.append("sap_kod",request.sap_kod);
 
         var gidecek = {
             params:params
